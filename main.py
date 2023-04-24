@@ -84,12 +84,11 @@ def run_search_algorithm():
     app.genetic_frame.Button("Deblur using genetic algorithm", get_genetic_vars)
     # frame for hill climb and swarm optimization
     # add a text box to set n, step_size, targeted variance, and max iterations
-    n = tk.Variable()
+
     step_size = tk.Variable()
     targeted_variance_hill_climb = tk.Variable()
     max_iterations = tk.Variable()
-    app.hill_climb_frame.Label("N")
-    app.hill_climb_frame.Entry(textvariable=n)
+
     app.hill_climb_frame.Label("Step size")
     app.hill_climb_frame.Entry(textvariable=step_size)
     app.hill_climb_frame.Label("Targeted variance")
@@ -99,16 +98,16 @@ def run_search_algorithm():
     hill_climb_vars = [0, 0, 0, 0]
 
     def get_hill_climb_vars():
-        hill_climb_vars[0] = int(n.get())
-        hill_climb_vars[1] = int(step_size.get())
+        hill_climb_vars[0] = 0
+        hill_climb_vars[1] = float(step_size.get())
         hill_climb_vars[2] = int(targeted_variance_hill_climb.get())
         hill_climb_vars[3] = int(max_iterations.get())
         image_file = image_file_path.get()
         ground_truth_file = ground_truth_file_path.get()
 
         print(hill_climb_vars)
-        run_hill_climb(image_file, ground_truth_file, hill_climb_vars[0], hill_climb_vars[1], hill_climb_vars[3],
-                       hill_climb_vars[2])
+        run_hill_climb(blur_img=image_file, clear_img=ground_truth_file, step_size=hill_climb_vars[1],
+                       max_iterations=hill_climb_vars[3], targetedVariance_inp=hill_climb_vars[2])
 
     app.hill_climb_frame.Button("Deblur using hill climb", get_hill_climb_vars)
 
