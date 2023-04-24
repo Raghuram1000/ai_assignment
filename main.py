@@ -17,12 +17,76 @@ def open_image():
         image = image.resize((int(image.size[0] / 2), int(image.size[1] / 2)))
         photo = ImageTk.PhotoImage(image.convert('L').resize((256, 256)))
         app = TKMT.ThemedTKinterFrame("Image Viewer", "sun-valley", "dark")
-        app.Label("Image Viewer")
+        app.Label("Deblurring Image")
         label = tk.Label(app.root, image=photo)
         label.image = photo
         label.grid(row=1, column=0)
 
         app.root.mainloop()
+
+
+def show_graphs():
+    app = TKMT.ThemedTKinterFrame("Graphs", "sun-valley", "dark")
+    # open the graphs folder and display the graphs
+    # app.Label("Graphs")
+
+    #     app.Label("Graphs")
+    # # two frames, one for laplace and one for ssim
+    #     app.laplace_frame = app.addLabelFrame("Laplace", row=0, col=0)
+    #
+    #
+    #     # load the 5 laplace images and display them
+    #     laplace_img1 = Image.open("laplace_graph/0_laplace.jpg")
+    #     laplace_img1 = laplace_img1.resize((int(laplace_img1.size[0] / 2), int(laplace_img1.size[1] / 2)))
+    #     laplace_img1 = ImageTk.PhotoImage(laplace_img1)
+    #
+    #     laplace_img2 = Image.open("laplace_graph/1_laplace.jpg")
+    #     laplace_img2 = laplace_img2.resize((int(laplace_img2.size[0] / 2), int(laplace_img2.size[1] / 2)))
+    #     laplace_img2 = ImageTk.PhotoImage(laplace_img2)
+    #
+    #     laplace_img3 = Image.open("laplace_graph/2_laplace.jpg")
+    #     laplace_img3 = laplace_img3.resize((int(laplace_img3.size[0] / 2), int(laplace_img3.size[1] / 2)))
+    #     laplace_img3 = ImageTk.PhotoImage(laplace_img3)
+    #
+    #     laplace_img4 = Image.open("laplace_graph/3_laplace.jpg")
+    #     laplace_img4 = laplace_img4.resize((int(laplace_img4.size[0] / 2), int(laplace_img4.size[1] / 2)))
+    #     laplace_img4 = ImageTk.PhotoImage(laplace_img4)
+    #
+    #     laplace_img5 = Image.open("laplace_graph/4_laplace.jpg")
+    #     laplace_img5 = laplace_img5.resize((int(laplace_img5.size[0] / 2), int(laplace_img5.size[1] / 2)))
+    #     laplace_img5 = ImageTk.PhotoImage(laplace_img5)
+    #
+    #
+    #     laplace_img6 = Image.open("laplace_graph/5_laplace.jpg")
+    #     laplace_img6 = laplace_img6.resize((int(laplace_img6.size[0] / 2), int(laplace_img6.size[1] / 2)))
+    #     laplace_img6 = ImageTk.PhotoImage(laplace_img6)
+    #
+    #     label1 = tk.Label(app.root, image=laplace_img1)
+    #     label1.image = laplace_img1
+    #     label1.grid(row=1, column=0)
+    #
+    #     label2 = tk.Label(app.root, image=laplace_img2, width=100, height=100)
+    #     label2.image = laplace_img2
+    #     label2.grid(row=1, column=1)
+    #
+    #     label3 = tk.Label(app.root, image=laplace_img3, width=100, height=100)
+    #     label3.image = laplace_img3
+    #     label3.grid(row=2, column=0)
+    #
+    #     label4 = tk.Label(app.root, image=laplace_img4, width=100, height=100)
+    #     label4.image = laplace_img4
+    #     label4.grid(row=2, column=1)
+    #
+    #     label5 = tk.Label(app.root, image=laplace_img5, width=100, height=100)
+    #     label5.image = laplace_img5
+    #     label5.grid(row=3, column=1)
+    #
+    #     label6 = tk.Label(app.root, image=laplace_img6, width=100, height=100)
+    #     label6.image = laplace_img6
+    #     label6.grid(row=4, column=0)
+    #
+
+    app.root.mainloop()
 
 
 def buttonCMD():
@@ -44,15 +108,11 @@ def run_search_algorithm():
     app.image_frame.Entry(textvariable=image_file_path)
     app.image_frame.Entry(textvariable=ground_truth_file_path)
 
-
-
     app.genetic_frame = app.addLabelFrame("Genetic Algorithm", row=1, col=0)
     app.hill_climb_frame = app.addLabelFrame("Hill Climb", row=1, col=1)
     app.swarm_opt_frame = app.addLabelFrame("Swarm Optimization", row=1, col=2)
     # differential evolution
     app.differential_frame = app.addLabelFrame("Differential Evolution", row=1, col=3)
-
-
 
     # add a text box to set population size, generations, mutation rate, and targeted variance
     pop_size = tk.Variable()
@@ -111,7 +171,6 @@ def run_search_algorithm():
 
     app.hill_climb_frame.Button("Deblur using hill climb", get_hill_climb_vars)
 
-
     kernel_size = tk.Variable()
     targeted_variance_swarm = tk.Variable()
     app.swarm_opt_frame.Label("Kernel size")
@@ -147,7 +206,6 @@ def run_search_algorithm():
         run_Differential(image_file, ground_truth_file, diff_vars[0])
 
     app.differential_frame.Button("Deblur using differential evolution", get_diff_vars)
-
 
     app.root.mainloop()
 
@@ -209,10 +267,10 @@ class App(TKMT.ThemedTKinterFrame):
         super().__init__(str("Blur removal"), theme, mode, usecommandlineargs, usethemeconfigfile)
         self.button_frame = self.addLabelFrame(str("Main Functions"))  # placed at row 1, col 0
         self.button_frame.Button(str("Train Neural Network"), buttonCMD2(lambda: run_app()))
-        self.button_frame.Button(str("Deblur an image"), open_image)
+        self.button_frame.Button(str("Deblur an image (Using search algorithm) "), open_image)
         self.button_frame_2 = self.addLabelFrame(str("Analysis"))  # placed at row 1, col 0
         self.button_frame_2.Button(str("Run Search algorithms"), buttonCMD2(lambda: run_search_algorithm()))
-        self.button_frame_2.Button(str("Compare search algorithms"), buttonCMD)
+        # self.button_frame_2.Button(str("Compare search algorithms"), buttonCMD2(lambda: show_graphs()))
         self.debugPrint()
         self.run()
 
